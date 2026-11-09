@@ -1,2 +1,31 @@
 # expense-tracker-python
-Aplicação de linha de comando desenvolvida em Python para gerenciamento de despesas pessoais, permitindo registrar, organizar e acompanhar gastos por categoria. Projeto desenvolvido para praticar lógica de programação, estruturas de dados e manipulação de informações em Python.
+
+Aplicação de controle de despesas desenvolvida em Python.
+
+## Funcionalidades
+
+- Cadastro de despesas
+- Organização por categoria
+- Listagem de gastos
+- Cálculo do total de despesas
+
+## Tecnologias utilizadas
+
+- Python 3
+
+## Como executar
+
+1. Clone o repositório
+2. Entre na pasta do projeto
+3. Execute:
+
+python main.py
+
+## Aprendizados
+
+Projeto desenvolvido para praticar:
+- Listas
+- Dicionários
+- Estruturas de repetição
+- Funções
+- Lógica de programação
