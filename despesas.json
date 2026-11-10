@@ -1,0 +1,14 @@
+[
+    {
+        "descricao": "Uber",
+        "categoria": "Locomoção",
+        "valor": 39.9,
+        "data": "18/01/2007"
+    },
+    {
+        "descricao": "Almoço",
+        "categoria": "Alimentalçao",
+        "valor": 28.9,
+        "data": "10/11/2026"
+    }
+]
