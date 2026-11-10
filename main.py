@@ -49,13 +49,21 @@ print("================================")
 despesas = []
 
 while True:
-    despesa = cadastrar_despesa()
-    despesas.append(despesa)
+    print("\n=== MENU ===")
+    print("1. Cadastrar nova despesa")
+    print("2. Listar despesas e resumo")
+    print("3. Sair")
 
-    opcao = input("\nDeseja cadastrar outra despesa? (s/n): ")
+    opcao = input("Escolha uma opção: ")
 
-    if opcao.lower() == "n":
-        break
-
-listar_despesas(despesas)
-mostrar_resumo(despesas)
+    if opcao == "1":
+        despesa = cadastrar_despesa()
+        despesas.append(despesa)
+    elif opcao == "2":
+        listar_despesas(despesas)
+        mostrar_resumo(despesas)
+    elif opcao == "3":
+        print("Saindo do programa...")
+        break  # Aqui ele para o loop e encerra de vez!
+    else:
+        print("Opção inválida! Tente novamente.")
