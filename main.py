@@ -2,15 +2,37 @@
 def cadastrar_despesa():
     print("\n========== NOVA DESPESA ==========")
 
+    descricao = input("Descrição da despesa: ")
+    categoria = input("Categoria da despesa: ")
+
+    # Validação do valor com try/except
+    while True:
+        try:
+            # Substitui vírgula por ponto caso o usuário digite 15,50
+            valor_str = input("Valor da despesa: ").replace(',', '.')
+            valor = float(valor_str)
+            break
+        except ValueError:
+            print("❌ Valor inválido! Digite apenas números (use ponto para decimais).")
+
+    # Entrada da data facilitada
+    data_input = input("Data da despesa").strip()
+    
+    # Formata automaticamente para dd/mm/aaaa se tiver 8 números
+    if len(data_input) == 8 and data_input.isdigit():
+        data = f"{data_input[0:2]}/{data_input[2:4]}/{data_input[4:8]}"
+    else:
+        data = data_input  
+        # Mantém como o usuário digitou se ele preferir colocar as barras
+    
     despesa = {
-        "descricao": input("Descrição da despesa: "),
-        "categoria": input("Categoria da despesa: "),
-        "valor": float(input("Valor da despesa: ")),
-        "data": input("Data da despesa (dd/mm/aaaa): ")
+        "descricao": descricao,
+        "categoria": categoria,
+        "valor": valor,
+        "data": data
     }
 
     return despesa
-
 
 def listar_despesas(despesas):
     print("\n========== DESPESAS REGISTRADAS ==========")
@@ -29,7 +51,6 @@ def calcular_total(despesas):
         total += despesa["valor"]
 
     return total
-
 
 def mostrar_resumo(despesas):
     total = calcular_total(despesas)
