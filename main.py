@@ -55,20 +55,6 @@ def listar_despesas(despesas):
         print(f"    Valor: R$ {despesa['valor']:.2f}")
         print(f"    Data: {despesa['data']}")
 
-    
-def listar_despesas(despesas):
-    print("\n========== DESPESAS REGISTRADAS ==========")
-    if not despesas:
-        print("Nenhuma despesa cadastrada ainda.")
-        return
-        
-    for i, despesa in enumerate(despesas):
-        print(f"\n[{i+1}] Descrição: {despesa['descricao']}")
-        print(f"    Categoria: {despesa['categoria']}")
-        print(f"    Valor: R$ {despesa['valor']:.2f}")
-        print(f"    Data: {despesa['data']}")
-
-
 def calcular_total(despesas):
     total = 0
     for despesa in despesas:
@@ -106,7 +92,58 @@ def remover_despesas(despesas):
                     break
                 else:
                     print("❌ Opção inválida. Digite 's' para sim ou 'n' para não.")
-                    break
+            else:
+                print("❌ Número inválido! Escolha um número que apareça na lista acima.")
+        except ValueError:
+            print("❌ Entrada inválida! Digite apenas números inteiros.")
+
+def editar_despesas(despesas):
+    if not despesas:
+        print("\n❌ Não há despesas para editar.")
+        return
+
+    listar_despesas(despesas)
+    
+    while True:
+        try:
+            numero_escolhido = int(input("\nDigite o número da despesa que deseja editar: "))
+            indice = numero_escolhido - 1
+            
+            if 0 <= indice < len(despesas):
+                despesa_atual = despesas[indice]
+                print(f"\nEditando a despesa: '{despesa_atual['descricao']}'")
+                print("Dica: Se quiser manter o valor atual, basta pressionar Enter sem digitar nada.")
+                
+                # atualiza descrição
+                nova_descricao = input(f"Nova descrição [{despesa_atual['descricao']}]: ").strip()
+                if nova_descricao:
+                    despesa_atual['descricao'] = nova_descricao
+                
+                # atualiza categoria
+                nova_categoria = input(f"Nova categoria [{despesa_atual['categoria']}]: ").strip()
+                if nova_categoria:
+                    despesa_atual['categoria'] = nova_categoria
+                
+                # atualizando valor com tratamento de erro
+                novo_valor_str = input(f"Novo valor [R$ {despesa_atual['valor']:.2f}]: ").replace(',', '.').strip()
+                if novo_valor_str:
+                    try:
+                        despesa_atual['valor'] = float(novo_valor_str)
+                    except ValueError:
+                        print("❌ Valor inválido! O valor anterior foi mantido.")
+
+                # atualiza data
+                nova_data = input(f"Nova data [{despesa_atual['data']}]: ").strip()
+                if nova_data:
+                    if len(nova_data) == 8 and nova_data.isdigit():
+                        despesa_atual['data'] = f"{nova_data[0:2]}/{nova_data[2:4]}/{nova_data[4:8]}"
+                    else:
+                        despesa_atual['data'] = nova_data
+
+                # isso salva as alterações no JSON
+                salvar_despesas(despesas)
+                print("💾 Despesa atualizada com sucesso!")
+                break
             else:
                 print("❌ Número inválido! Escolha um número que apareça na lista acima.")
         except ValueError:
@@ -126,7 +163,8 @@ while True:
     print("1. Cadastrar nova despesa")
     print("2. Listar despesas e resumo")
     print("3. Remover despesa")
-    print("4. Sair")
+    print("4. Editar despesa")
+    print("5. Sair")
 
     opcao = input("Escolha uma opção: ")
 
@@ -144,6 +182,9 @@ while True:
         remover_despesas(despesas)
         
     elif opcao == "4":
+        editar_despesas(despesas)
+        
+    elif opcao == "5":
         print("Saindo do programa. Até mais!")
         break 
     else:
