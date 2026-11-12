@@ -19,24 +19,20 @@ def cadastrar_despesa():
     descricao = input("Descrição da despesa: ")
     categoria = input("Categoria da despesa: ")
 
-    # Validação do valor com try/except
     while True:
         try:
-            # Substitui vírgula por ponto caso o usuário digite 15,50
             valor_str = input("Valor da despesa: ").replace(',', '.')
             valor = float(valor_str)
             break
         except ValueError:
             print("❌ Valor inválido! Digite apenas números (use ponto para decimais).")
 
-    # Entrada da data facilitada
     data_input = input("Data da despesa: ").strip()
     
-    # Formata automaticamente para dd/mm/aaaa se tiver 8 números
     if len(data_input) == 8 and data_input.isdigit():
         data = f"{data_input[0:2]}/{data_input[2:4]}/{data_input[4:8]}"
     else:
-        data = data_input  # Mantém como o usuário digitou
+        data = data_input 
     
     despesa = {
         "descricao": descricao,
@@ -54,7 +50,19 @@ def listar_despesas(despesas):
         return
         
     for i, despesa in enumerate(despesas):
-        # Usamos i + 1 para o usuário ver de 1 em diante, mas lembre-se que na lista o índice real é `i`
+        print(f"\n[{i+1}] Descrição: {despesa['descricao']}")
+        print(f"    Categoria: {despesa['categoria']}")
+        print(f"    Valor: R$ {despesa['valor']:.2f}")
+        print(f"    Data: {despesa['data']}")
+
+    
+def listar_despesas(despesas):
+    print("\n========== DESPESAS REGISTRADAS ==========")
+    if not despesas:
+        print("Nenhuma despesa cadastrada ainda.")
+        return
+        
+    for i, despesa in enumerate(despesas):
         print(f"\n[{i+1}] Descrição: {despesa['descricao']}")
         print(f"    Categoria: {despesa['categoria']}")
         print(f"    Valor: R$ {despesa['valor']:.2f}")
@@ -85,9 +93,7 @@ def remover_despesas(despesas):
             numero_escolhido = int(input("\nDigite o número da despesa que deseja remover: "))
             indice = numero_escolhido - 1
             
-            # 1. Primeiro validamos se o índice existe
             if 0 <= indice < len(despesas):
-                # 2. Se existe, pedimos a confirmação antes de apagar de vez
                 confirmacao = input(f"Tem certeza que deseja apagar a despesa '{despesas[indice]['descricao']}'? (s/n): ").strip().lower()
                 
                 if confirmacao == "s":
@@ -100,7 +106,7 @@ def remover_despesas(despesas):
                     break
                 else:
                     print("❌ Opção inválida. Digite 's' para sim ou 'n' para não.")
-                    break # ou podemos deixar o usuário tentar digitar a confirmação de novo
+                    break
             else:
                 print("❌ Número inválido! Escolha um número que apareça na lista acima.")
         except ValueError:
@@ -113,7 +119,6 @@ print("       EXPENSE TRACKER")
 print("Bem-vindo ao seu controle de gastos!")
 print("================================")
 
-# 1. Carrega as despesas salvas anteriormente (se houverem)
 despesas = carregar_despesas()
 
 while True:
